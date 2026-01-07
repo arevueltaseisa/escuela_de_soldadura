@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escuela de Soldadura | Electrodos INFRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --infra-yellow: #F4B223;
+            --infra-yellow-dark: #D99B1E;
+            --infra-blue: #1A365D;
+            --infra-blue-light: #2C4A7C;
+            --infra-dark: #0D1B2A;
+            --infra-white: #FAFAFA;
+            --infra-gray: #E8E8E8;
+            --spark-orange: #FF6B35;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--infra-dark);
+            color: var(--infra-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Sparks Animation Background */
+        .sparks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--infra-yellow);
+            border-radius: 50%;
+            opacity: 0;
+            animation: spark-fall 3s ease-in infinite;
+            box-shadow: 0 0 6px var(--infra-yellow), 0 0 12px var(--spark-orange);
+        }
+
+        @keyframes spark-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100px) scale(0);
+            }
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--infra-dark) 0%, var(--infra-blue) 50%, var(--infra-dark) 100%);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(244, 178, 35, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-name span:first-child {
+            color: var(--infra-white);
+        }
+
+        .brand-name span:last-child {
+            color: var(--infra-yellow);
+        }
+
+        .school-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 500;
+            color: var(--infra-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin: 1rem 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .school-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--infra-yellow), transparent);
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-weight: 300;
+            color: var(--infra-gray);
+            margin-top: 2rem;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--infra-yellow);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Section Styling */
+        section {
+            position: relative;
+            z-index: 1;
+            padding: 4rem 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 600;
+            color: var(--infra-yellow);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 100%;
+            background: var(--infra-yellow);
+        }
+
+        /* Audience Section */
+        .audience-section {
+            background: linear-gradient(180deg, var(--infra-dark) 0%, var(--infra-blue) 100%);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .audience-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(244, 178, 35, 0.3);
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .audience-item:hover {
+            background: rgba(244, 178, 35, 0.1);
+            border-color: var(--infra-yellow);
+            transform: translateY(-5px);
+        }
+
+        .audience-item span {
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: var(--infra-blue);
+        }
+
+        .features-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(13, 27, 42, 0.7);
+            border-left: 4px solid var(--infra-yellow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(13, 27, 42, 0.9);
+            transform: translateX(10px);
+        }
+
+        .feature-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--infra-yellow);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: var(--infra-gray);
+            font-weight: 300;
+        }
+
+        /* Courses Section */
+        .courses-section {
+            background: linear-gradient(180deg, var(--infra-blue) 0%, var(--infra-dark) 100%);
+        }
+
+        .courses-grid {
+            display: grid;
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(244, 178, 35, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .course-card:hover {
+            border-color: var(--infra-yellow);
+            box-shadow: 0 10px 40px rgba(244, 178, 35, 0.15);
+        }
+
+        .course-header {
+            background: linear-gradient(135deg, var(--infra-yellow) 0%, var(--infra-yellow-dark) 100%);
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-header h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--infra-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .course-toggle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--infra-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .course-toggle svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--infra-yellow);
+            transition: transform 0.3s ease;
+        }
+
+        .course-card.active .course-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .course-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .course-card.active .course-content {
+            max-height: 1000px;
+        }
+
+        .course-topics {
+            padding: 1.2rem;
+            list-style: none;
+        }
+
+        .course-topics li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--infra-gray);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .course-topics li:last-child {
+            border-bottom: none;
+        }
+
+        .course-topics li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--infra-yellow);
+        }
+
+        /* Clients Section */
+        .clients-section {
+            background: var(--infra-dark);
+            text-align: center;
+        }
+
+        .clients-intro {
+            font-size: 1rem;
+            color: var(--infra-gray);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .clients-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .client-category {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(244, 178, 35, 0.15);
+        }
+
+        .client-category h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--infra-yellow);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .client-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+
+        .client-tag {
+            background: rgba(244, 178, 35, 0.1);
+            color: var(--infra-white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--infra-blue) 0%, var(--infra-blue-light) 100%);
+            text-align: center;
+        }
+
+        .contact-card {
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 2px solid var(--infra-yellow);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--infra-white);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-title {
+            font-size: 0.95rem;
+            color: var(--infra-yellow);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--infra-white);
+        }
+
+        .contact-item:hover {
+            background: rgba(244, 178, 35, 0.15);
+            transform: scale(1.02);
+        }
+
+        .contact-item svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--infra-yellow);
+            flex-shrink: 0;
+        }
+
+        .contact-item span {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--infra-dark);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(244, 178, 35, 0.2);
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--infra-gray);
+            opacity: 0.7;
+        }
+
+        /* Animations on Scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 600px) {
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .audience-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .course-header h3 {
+                font-size: 0.9rem;
+            }
+
+            .contact-card {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sparks Background -->
+    <div class="sparks-container" id="sparks"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="brand-name">
+                <span>ELECTRODOS </span><span>INFRA</span>
+            </div>
+            <h1 class="school-title">Escuela de Soldadura</h1>
+            <p class="tagline">Desarrollo de habilidades con una perspectiva tecnológica</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </div>
+    </header>
+
+    <!-- Audience Section -->
+    <section class="audience-section">
+        <div class="section-title fade-in">¿Para quién?</div>
+        <div class="audience-grid">
+            <div class="audience-item fade-in"><span>Principiantes</span></div>
+            <div class="audience-item fade-in"><span>Soldadores en Entrenamiento</span></div>
+            <div class="audience-item fade-in"><span>Soldadores Calificados</span></div>
+            <div class="audience-item fade-in"><span>Ayudantes de Soldador</span></div>
+            <div class="audience-item fade-in"><span>Supervisores de Soldadura</span></div>
+            <div class="audience-item fade-in"><span>Personal de Mantenimiento</span></div>
+            <div class="audience-item fade-in"><span>Técnicos en Soldadura</span></div>
+            <div class="audience-item fade-in"><span>Inspectores de Calidad</span></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="section-title fade-in">Metodología</div>
+            <div class="feature-card fade-in">
+                <h3>📍 Capacitación In-Situ</h3>
+                <p>Los cursos son impartidos dentro de las instalaciones de su empresa, para tener una relación más cercana a las necesidades de los participantes.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <h3>🔧 Enfoque Práctico</h3>
+                <p>Las prácticas son llevadas a cabo en el área de trabajo con métodos probados y aplicables dentro del ambiente laboral.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <h3>📚 Base Teórica Sólida</h3>
+                <p>Combinamos la práctica con fundamentos teóricos esenciales para una comprensión completa de los procesos de soldadura.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <h3>🎯 Cursos Personalizados</h3>
+                <p>Desarrollamos cursos específicos de acuerdo a las necesidades particulares de cada organización.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="courses-section">
+        <div class="section-title fade-in">Catálogo de Cursos</div>
+        <div class="courses-grid">
+            
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>A) Soldadura Eléctrica</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>El proceso de soldadura eléctrica</li>
+                        <li>El circuito de la soldadura</li>
+                        <li>Tipos de corriente y sus propiedades</li>
+                        <li>Tipos de máquinas de soldar</li>
+                        <li>Máquinas: transformador, generador, rectificador, inversora</li>
+                        <li>Polaridad y ciclo de trabajo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>B) Procesos de Soldadura</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Proceso SMAW (Arco con electrodo revestido)</li>
+                        <li>Proceso SAW (Arco sumergido)</li>
+                        <li>Proceso GTAW (TIG)</li>
+                        <li>Proceso GMAW (MIG/MAG)</li>
+                        <li>Proceso OFW (Oxiacetileno)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>C) Aceros al Carbono</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Clasificación de metales y aceros</li>
+                        <li>Electrodos para acero al carbono</li>
+                        <li>Electrodos de baja aleación</li>
+                        <li>Características del revestimiento</li>
+                        <li>Soldabilidad y elementos de aleación</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>D) Aceros Inoxidables</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Clasificación de aceros inoxidables</li>
+                        <li>Fenómeno de sensitización</li>
+                        <li>Aceros austeníticos, martensíticos y ferríticos</li>
+                        <li>Procedimiento de soldadura</li>
+                        <li>Recomendaciones para material de aporte</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>E) Hierros Colados</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Fabricación y elementos aleantes</li>
+                        <li>Fundición: blanca, maleable, gris y nodular</li>
+                        <li>Procedimiento de soldadura</li>
+                        <li>Materiales de aporte</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>F) Aluminio y Aleaciones</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Propiedades principales del aluminio</li>
+                        <li>Elementos de aleación</li>
+                        <li>Clasificación y tipos</li>
+                        <li>Aplicaciones y materiales de aporte</li>
+                        <li>Procedimientos de soldadura</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>G) Cobre y Aleaciones</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Características físicas y propiedades mecánicas</li>
+                        <li>Aleaciones más usuales</li>
+                        <li>Clasificación CDA para cobres forjados</li>
+                        <li>Soldado por arco metálico</li>
+                        <li>Proceso de soldadura</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>H) Revestimientos Duros</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Definición de revestimiento duro y desgaste</li>
+                        <li>Procesos de desgaste</li>
+                        <li>Revestimiento de superficies metálicas</li>
+                        <li>Material para reconstrucción y revestimiento</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>I) Proceso GMAW (MIG/MAG)</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Funcionamiento y equipo</li>
+                        <li>Material de aporte y gases de protección</li>
+                        <li>Aplicaciones industriales</li>
+                        <li>Seguridad y calidad en uniones soldadas</li>
+                        <li>Recomendaciones de operación</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>J) Proceso GTAW (TIG)</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Gases de protección y alta frecuencia</li>
+                        <li>Electrodos de tungsteno</li>
+                        <li>Material de aporte y aplicaciones</li>
+                        <li>Seguridad y calidad</li>
+                        <li>Recomendaciones de operación</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>K) Inspección Visual de Soldadura</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Objetivo y normas aplicables</li>
+                        <li>Equipo requerido</li>
+                        <li>Simbología de la soldadura</li>
+                        <li>Interpretación y ejercicios prácticos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>L) Trabajos en Alturas</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Obligaciones del patrón y trabajadores</li>
+                        <li>Medidas generales de seguridad</li>
+                        <li>Sistemas personales para trabajos en alturas</li>
+                        <li>Plan de atención de emergencias</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="course-card fade-in">
+                <div class="course-header" onclick="toggleCourse(this)">
+                    <h3>M) Seguridad NOM-027-STPS-2008</h3>
+                    <div class="course-toggle"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></div>
+                </div>
+                <div class="course-content">
+                    <ul class="course-topics">
+                        <li>Trabajos con corte y soldadura</li>
+                        <li>Atmósfera explosiva y no respirable</li>
+                        <li>Riesgos presentes y prevención</li>
+                        <li>Normas de referencia (NOM-026, NOM-022, NOM-004)</li>
+                        <li>Equipo de protección personal</li>
+                        <li>Permisos y procedimientos de seguridad</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section">
+        <div class="section-title fade-in">Clientes y Aliados</div>
+        <p class="clients-intro fade-in">Hemos capacitado a equipos de las principales empresas e instituciones del país</p>
+        <div class="clients-categories">
+            <div class="client-category fade-in">
+                <h3>Cursos Especializados</h3>
+                <div class="client-logos">
+                    <span class="client-tag">PEMEX</span>
+                    <span class="client-tag">SEGOB</span>
+                    <span class="client-tag">KONE</span>
+                    <span class="client-tag">Cementos Moctezuma</span>
+                    <span class="client-tag">Fresnillo</span>
+                    <span class="client-tag">Minera del Norte</span>
+                    <span class="client-tag">CAFESCA</span>
+                    <span class="client-tag">TACHI-S</span>
+                    <span class="client-tag">ICA</span>
+                    <span class="client-tag">TECHINT</span>
+                    <span class="client-tag">Ingenios Santos</span>
+                </div>
+            </div>
+            <div class="client-category fade-in">
+                <h3>Pláticas Técnicas</h3>
+                <div class="client-logos">
+                    <span class="client-tag">Grupo INFRA</span>
+                    <span class="client-tag">CFE</span>
+                    <span class="client-tag">KAYSER</span>
+                    <span class="client-tag">CryoINFRA</span>
+                    <span class="client-tag">AWS</span>
+                </div>
+            </div>
+            <div class="client-category fade-in">
+                <h3>Instituciones Educativas</h3>
+                <div class="client-logos">
+                    <span class="client-tag">IPN</span>
+                    <span class="client-tag">Grupo México</span>
+                    <span class="client-tag">YOROZU</span>
+                    <span class="client-tag">FEMSA</span>
+                    <span class="client-tag">EMERSON</span>
+                    <span class="client-tag">Motzorongo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="section-title fade-in">Contacto</div>
+        <div class="contact-card fade-in">
+            <div class="contact-name">Ubaldo Arévalo López</div>
+            <div class="contact-title">Jefatura Asesoría Técnica Comercial</div>
+            
+            <a href="tel:+525558701500" class="contact-item">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <span>+(55) 5870 15 00 ext. 106</span>
+            </a>
+            
+            <a href="tel:+525526991076" class="contact-item">
+                <svg viewBox="0 0 24 24"><path d="M15.5 1h-8C6.12 1 5 2.12 5 3.5v17C5 21.88 6.12 23 7.5 23h8c1.38 0 2.5-1.12 2.5-2.5v-17C18 2.12 16.88 1 15.5 1zm-4 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5-4H7V4h9v14z"/></svg>
+                <span>55 2699 1076</span>
+            </a>
+            
+            <a href="mailto:uarevalo@electrodosinfra.com.mx" class="contact-item">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>uarevalo@electrodosinfra.com.mx</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Electrodos INFRA® — Escuela de Soldadura</p>
+    </footer>
+
+    <script>
+        // Toggle course content
+        function toggleCourse(header) {
+            const card = header.parentElement;
+            card.classList.toggle('active');
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Generate sparks
+        function createSparks() {
+            const container = document.getElementById('sparks');
+            const sparkCount = 15;
+            
+            for (let i = 0; i < sparkCount; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'spark';
+                spark.style.left = Math.random() * 100 + '%';
+                spark.style.top = Math.random() * 50 + '%';
+                spark.style.animationDelay = Math.random() * 3 + 's';
+                spark.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(spark);
+            }
+        }
+
+        createSparks();
+    </script>
+</body>
+</html>
